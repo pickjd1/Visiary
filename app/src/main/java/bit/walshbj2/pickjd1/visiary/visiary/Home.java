@@ -1,9 +1,12 @@
 package bit.walshbj2.pickjd1.visiary.visiary;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class Home extends ActionBarActivity {
@@ -12,6 +15,9 @@ public class Home extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Button addEntry = (Button) findViewById(R.id.imageButtonAddEntry);
+        addEntry.setOnClickListener(new addEntryButton);
     }
 
     @Override
@@ -34,5 +40,15 @@ public class Home extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class addEntryButton implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(Home.this, AddPhoto.class);
+            startActivity(intent);
+        }
     }
 }
