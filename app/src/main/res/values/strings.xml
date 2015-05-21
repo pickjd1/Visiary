@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Visiary</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_photo">AddPhoto</string>
+    <string name="title_add_journal_entry">Add An Entry:</string>
+    <string name="title_date">Today's Date:</string>
+    <string name="placeholder"></string>
 </resources>
