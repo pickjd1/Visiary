@@ -5,6 +5,7 @@
     <string name="home">Home</string>
     <string name="title_activity_add_photo">AddPhoto</string>
     <string name="title_add_journal_entry">Add An Entry:</string>
-    <string name="title_date">Today's Date:</string>
+    <string name="title_date">Today\'s Date:</string>
+    <string name="title_about_photo">About this photo:</string>
     <string name="placeholder"></string>
 </resources>
