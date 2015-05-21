@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 
 public class Home extends ActionBarActivity {
@@ -16,8 +17,8 @@ public class Home extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Button addEntry = (Button) findViewById(R.id.imageButtonAddEntry);
-        addEntry.setOnClickListener(new addEntryButton);
+        ImageView addEntry = (ImageView) findViewById(R.id.imageButtonAddEntry);
+        addEntry.setOnClickListener(new addEntryButton());
     }
 
     @Override
