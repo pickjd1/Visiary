@@ -65,4 +65,13 @@
         android:layout_below="@+id/btnAddPhoto"
         android:layout_toRightOf="@+id/tvCurrentDate"
         android:layout_toEndOf="@+id/tvCurrentDate" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_submit_entry"
+        android:id="@+id/btnSubmitEntry"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/tvAddEntryTitle"
+        android:layout_alignEnd="@+id/tvAddEntryTitle" />
 </RelativeLayout>

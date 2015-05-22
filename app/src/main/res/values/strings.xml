@@ -8,4 +8,5 @@
     <string name="title_date">Today\'s Date:</string>
     <string name="title_about_photo">About this photo:</string>
     <string name="placeholder"></string>
+    <string name="btn_submit_entry">Add Entry</string>
 </resources>

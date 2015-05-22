@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class AddPhoto extends ActionBarActivity {
 
         //Retrieve layout resources.
         btnAddImage = (ImageButton) findViewById(R.id.btnAddPhoto);
-        EditText etAboutPhoto = (EditText) findViewById(R.id.etAboutPhoto);
+        Button btnAddEntry = (Button) findViewById(R.id.btnSubmitEntry);
         TextView tvCurrentDate = (TextView) findViewById(R.id.tvCurrentDate);
 
         //Create a new formatted timestamp showing todays date and time
@@ -45,13 +46,19 @@ public class AddPhoto extends ActionBarActivity {
         timeStamp = timeStampFormat.format(currentTime);
 
         //Set the timestamp to be displayed in the date text view
-        tvCurrentDate.setText(timeStamp);
+        tvCurrentDate.setText(currentTime.toString());
 
         //Create a new on click handler for the image button
         View.OnClickListener addImageOnClick = new AddImageOnClick();
 
+        //Create a new on click handler for the add entry button
+        View.OnClickListener addEntryOnClick = new AddEntryOnClick();
+
         //Set the listener to the image button
         btnAddImage.setOnClickListener(addImageOnClick);
+
+        //Set the listener to the add entry button
+        btnAddEntry.setOnClickListener(addEntryOnClick);
     }
 
     @Override
@@ -81,7 +88,7 @@ public class AddPhoto extends ActionBarActivity {
     {
         File imageRootPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-        File imageStorageDirectory = new File(imageRootPath, "CameraDemo1");
+        File imageStorageDirectory = new File(imageRootPath, "Visiary");
         if(!imageStorageDirectory.exists())
         {
             imageStorageDirectory.mkdirs();
@@ -94,7 +101,47 @@ public class AddPhoto extends ActionBarActivity {
         return photoFile;
     }
 
+    //Inner class to handle the on click event of the add entry button******************************
+    public class AddEntryOnClick implements View.OnClickListener
+    {
 
+        @Override
+        public void onClick(View v) {
+            //Retrieve the edit text resource
+            EditText etAboutPhoto = (EditText) findViewById(R.id.etAboutPhoto);
+
+            //Set the text input from the edit text to a string
+            String diaryEntry = etAboutPhoto.getText().toString();
+
+            //If the string is empty...
+            if(!(diaryEntry.isEmpty()) && !(diaryEntry.equals("")))
+            {
+               //then check the photo is not the default image...
+                if(btnAddImage.getDrawable() == getResources().getDrawable(R.drawable.addimage))
+                {
+                    //if it is then show a toast stating to add a photo.
+                    Toast.makeText(AddPhoto.this,"Please add an image to your entry.", Toast.LENGTH_LONG).show();
+                }
+                //Otherwise...
+                else
+                {
+                    //Create a new database object to add the entry to the database and save it.
+                    Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            //Otherwise...
+            else
+            {
+                //show a toast asking the user to fill in a diary entry about the image
+                Toast.makeText(AddPhoto.this,"Please add a diary entry about this photo.", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+
+    //Inner class to handle the on click event of the image button**********************************
     public class AddImageOnClick implements View.OnClickListener
     {
 
@@ -117,13 +164,13 @@ public class AddPhoto extends ActionBarActivity {
     {
         if (requestCode == 1)
         {
-            if (requestCode == RESULT_OK)
+            if (resultCode == RESULT_OK)
             {
-                String realFilePath =mPhotoFile.getPath();
+                String realFilePath = mPhotoFile.getPath();
 
                 Bitmap userPhoto = BitmapFactory.decodeFile(realFilePath);
 
-                btnAddImage.setImageBitmap(userPhoto);
+                btnAddImage.setImageBitmap(Bitmap.createScaledBitmap(userPhoto,btnAddImage.getWidth(),btnAddImage.getHeight(),false));
 
             }
             else
