@@ -1,13 +1,14 @@
 package bit.walshbj2.pickjd1.visiary.visiary;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.ListView;
 
 
 public class Home extends ActionBarActivity {
@@ -17,7 +18,11 @@ public class Home extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ImageView addEntry = (ImageView) findViewById(R.id.imageButtonAddEntry);
+        //setListView();
+        //Retrieve resources
+        ImageButton addEntry = (ImageButton) findViewById(R.id.imageButtonAddEntry);
+
+        //Set the onClickListener to the add a Journal Entry image button.
         addEntry.setOnClickListener(new addEntryButton());
     }
 
@@ -51,5 +56,25 @@ public class Home extends ActionBarActivity {
             Intent intent = new Intent(Home.this, AddPhoto.class);
             startActivity(intent);
         }
+    }
+
+//    public class JournalEntry {
+//        String date;
+//        String location;
+//        Drawable journalImage;
+//        String blurb;
+//
+//        public JournalEntry(String date, String location, Drawable journalImage, String blurb) {
+//            this.date = date;
+//            this.location = location;
+//            this.journalImage = journalImage;
+//            this.blurb = blurb;
+//        }
+//    }
+
+    private void setListView() {
+
+        ListView journalListView = (ListView) findViewById(R.id.listViewJornalEntries);
+
     }
 }

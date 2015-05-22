@@ -27,4 +27,12 @@
 
         android:contentDescription="Add Entry"
         android:src="@android:drawable/ic_input_add" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewJornalEntries"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/imageButtonAddEntry"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
