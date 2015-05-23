@@ -29,6 +29,9 @@ public class AddPhoto extends ActionBarActivity {
     Uri mPhotoFileUri;
     ImageButton btnAddImage;
     String timeStamp;
+    String realFilePath;
+
+    JournalDataSource dbAccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class AddPhoto extends ActionBarActivity {
 
         //Set the listener to the add entry button
         btnAddEntry.setOnClickListener(addEntryOnClick);
+
+        dbAccess = new JournalDataSource(this);
     }
 
     @Override
@@ -113,6 +118,8 @@ public class AddPhoto extends ActionBarActivity {
             //Set the text input from the edit text to a string
             String diaryEntry = etAboutPhoto.getText().toString();
 
+            String testingLocation = "hardCodedLocation";
+
             //If the string is empty...
             if(!(diaryEntry.isEmpty()) && !(diaryEntry.equals("")))
             {
@@ -125,6 +132,7 @@ public class AddPhoto extends ActionBarActivity {
                 //Otherwise...
                 else
                 {
+                    dbAccess.createJournalEntry(timeStamp, testingLocation,realFilePath,diaryEntry);
                     //Create a new database object to add the entry to the database and save it.
                     Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
                 }
@@ -166,7 +174,7 @@ public class AddPhoto extends ActionBarActivity {
         {
             if (resultCode == RESULT_OK)
             {
-                String realFilePath = mPhotoFile.getPath();
+                realFilePath = mPhotoFile.getPath();
 
                 Bitmap userPhoto = BitmapFactory.decodeFile(realFilePath);
 
