@@ -9,4 +9,7 @@
     <string name="title_about_photo">About this photo:</string>
     <string name="placeholder"></string>
     <string name="btn_submit_entry">Add Entry</string>
+    <string name="title_activity_set_location">Set Location</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
