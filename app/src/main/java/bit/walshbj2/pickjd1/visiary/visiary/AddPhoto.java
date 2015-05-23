@@ -134,7 +134,10 @@ public class AddPhoto extends ActionBarActivity {
                 {
                     dbAccess.createJournalEntry(timeStamp, testingLocation,realFilePath,diaryEntry);
                     //Create a new database object to add the entry to the database and save it.
-                    Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(AddPhoto.this, Home.class);
+                    startActivity(intent);
                 }
 
             }
