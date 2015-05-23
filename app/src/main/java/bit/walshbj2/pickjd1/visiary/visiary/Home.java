@@ -33,7 +33,7 @@ public class Home extends ActionBarActivity {
 
         journalEntries = dataSource.getJournalEntryList();
 
-        //setListView();
+        setListView();
         //Retrieve resources
         ImageButton addEntry = (ImageButton) findViewById(R.id.imageButtonAddEntry);
 

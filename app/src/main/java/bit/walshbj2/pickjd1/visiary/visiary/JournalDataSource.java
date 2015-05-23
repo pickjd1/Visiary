@@ -32,6 +32,11 @@ public class JournalDataSource {
 
     //Add a new journal entry
     public void createJournalEntry(String date, String location, String picFilePath, String blurb) {
+        try {
+            open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(DatabaseManager.COLUMN_DATE, date);
@@ -41,6 +46,8 @@ public class JournalDataSource {
 
         // Insert the new row, returning the primary key value of the new row
         long insertRow = database.insert(DatabaseManager.TABLE_NAME, null, values);
+
+        close();
     }
 
     //delete a JournalEntry
