@@ -80,6 +80,9 @@ public class JournalDataSource {
         JournalEntry je = new JournalEntry();
         je.setJournalID(cursor.getInt(0));
         je.setDate(cursor.getString(1));
+        je.setLocation(cursor.getString(2));
+        je.setPicFilePath(cursor.getString(3));
+        je.setBlurb(cursor.getString(4));
         return je;
     }
 }
