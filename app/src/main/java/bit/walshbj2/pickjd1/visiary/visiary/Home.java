@@ -10,13 +10,28 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import java.sql.SQLException;
+import java.util.List;
+
 
 public class Home extends ActionBarActivity {
+
+    List<JournalEntry> journalEntries;
+   JournalDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        dataSource = new JournalDataSource(this);
+        try {
+            dataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        journalEntries = dataSource.getJournalEntryList();
 
         //setListView();
         //Retrieve resources
@@ -58,23 +73,13 @@ public class Home extends ActionBarActivity {
         }
     }
 
-//    public class JournalEntry {
-//        String date;
-//        String location;
-//        Drawable journalImage;
-//        String blurb;
-//
-//        public JournalEntry(String date, String location, Drawable journalImage, String blurb) {
-//            this.date = date;
-//            this.location = location;
-//            this.journalImage = journalImage;
-//            this.blurb = blurb;
-//        }
-//    }
-
     private void setListView() {
 
         ListView journalListView = (ListView) findViewById(R.id.listViewJornalEntries);
 
+        JournalEntryAdapter adapter = new JournalEntryAdapter(this, R.layout.journal_entries_layout, journalEntries );
+
+        //Bind the listView to the above adapter
+        journalListView.setAdapter(adapter);
     }
 }
