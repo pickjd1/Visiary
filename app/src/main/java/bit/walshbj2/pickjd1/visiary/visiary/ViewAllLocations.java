@@ -3,12 +3,16 @@ package bit.walshbj2.pickjd1.visiary.visiary;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ViewAllLocations extends FragmentActivity {
@@ -34,6 +38,8 @@ public class ViewAllLocations extends FragmentActivity {
 
 
         setUpMapIfNeeded();
+
+        //setUpMap();
     }
 
     @Override
@@ -77,11 +83,41 @@ public class ViewAllLocations extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+
+        LatLng latLng = new LatLng(0,0);
+
 
         for(JournalEntry je : journalEntries)
         {
-            mMap.addMarker(new MarkerOptions().position(new LatLng(je.getLocationLat(), je.getLocationLong())).title(je.getDate()));
+            latLng = new LatLng(je.getLocationLat(), je.getLocationLong());
+
+            String date = je.getDate();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+
+            Date formatInDateFrom = null;
+            // Parse String date to Date
+            try {
+                formatInDateFrom = (Date) formatter.parse(date);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // Set up new format ("WeekDay, Day, Month ' Year Hour:Mintues M")
+            SimpleDateFormat newFormat = new SimpleDateFormat(
+                    "EEE, d MMM, ''yy h:mm aaa");
+            // reformat date and put back into a string
+            String formattedDate = newFormat.format(formatInDateFrom);
+
+           // mMap.addMarker(new MarkerOptions().position(new LatLng(je.getLocationLat(), je.getLocationLong())).title(je.getDate()));
+            MarkerOptions options = new MarkerOptions()
+                    .position(latLng)
+                    .title(formattedDate);
+            mMap.addMarker(options);
         }
+
+        float zoomLevel = (float) 16.0; //This goes up to 21
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
     }
 }

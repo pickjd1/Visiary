@@ -62,9 +62,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/title_about_photo"
         android:id="@+id/textView"
-        android:layout_below="@+id/btnAddLocation"
-        android:layout_toRightOf="@+id/tvCurrentDate"
-        android:layout_toEndOf="@+id/tvCurrentDate" />
+        android:layout_below="@+id/btnAddLocation"/>
 
     <Button
         android:layout_width="wrap_content"
