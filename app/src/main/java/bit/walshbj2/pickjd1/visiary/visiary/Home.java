@@ -8,7 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -33,7 +35,15 @@ public class Home extends ActionBarActivity {
 
         journalEntries = dataSource.getJournalEntryList();
 
-        setListView();
+
+        if(journalEntries.isEmpty())
+        {
+        ImageView empty = (ImageView) findViewById(R.id.imageViewEmptyList);
+        empty.setVisibility(View.VISIBLE);
+        }
+        else {
+            setListView();
+        }
         //Retrieve resources
         ImageButton addEntry = (ImageButton) findViewById(R.id.imageButtonAddEntry);
 
