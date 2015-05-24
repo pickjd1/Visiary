@@ -15,7 +15,7 @@ public class JournalDataSource {
     //Database fields
     private SQLiteDatabase database;
     private DatabaseManager dbManager;
-    private String[] allColumns = {DatabaseManager.COLUMN_ID, DatabaseManager.COLUMN_DATE, DatabaseManager.COLUMN_LOCATION, DatabaseManager.COLUMN_PIC_FILEPATH, DatabaseManager.COLUMN_BLURB};
+    private String[] allColumns = {DatabaseManager.COLUMN_ID, DatabaseManager.COLUMN_DATE, DatabaseManager.COLUMN_LOCATIONLAT, DatabaseManager.COLUMN_LOCATIONLONG, DatabaseManager.COLUMN_PIC_FILEPATH, DatabaseManager.COLUMN_BLURB};
 
     public  JournalDataSource(Context context) {
         dbManager = new DatabaseManager(context);
@@ -31,7 +31,7 @@ public class JournalDataSource {
     }
 
     //Add a new journal entry
-    public void createJournalEntry(String date, String location, String picFilePath, String blurb) {
+    public void createJournalEntry(String date, double locationLat, double locationLong, String picFilePath, String blurb) {
         try {
             open();
         } catch (SQLException e) {
@@ -40,7 +40,8 @@ public class JournalDataSource {
         //Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
         values.put(DatabaseManager.COLUMN_DATE, date);
-        values.put(DatabaseManager.COLUMN_LOCATION, location);
+        values.put(DatabaseManager.COLUMN_LOCATIONLAT, locationLat);
+        values.put(DatabaseManager.COLUMN_LOCATIONLONG, locationLong);
         values.put(DatabaseManager.COLUMN_PIC_FILEPATH, picFilePath);
         values.put(DatabaseManager.COLUMN_BLURB, blurb);
 
@@ -80,9 +81,16 @@ public class JournalDataSource {
         JournalEntry je = new JournalEntry();
         je.setJournalID(cursor.getInt(0));
         je.setDate(cursor.getString(1));
-        je.setLocation(cursor.getString(2));
-        je.setPicFilePath(cursor.getString(3));
-        je.setBlurb(cursor.getString(4));
+        je.setLocationLat(cursor.getDouble(2));
+        je.setLocationLong(cursor.getDouble(3));
+        je.setPicFilePath(cursor.getString(4));
+        je.setBlurb(cursor.getString(5));
         return je;
+    }
+
+    //For db maintenance
+    public void UpdateDatbase ()
+    {
+        dbManager.onUpgrade(database,1,2);
     }
 }

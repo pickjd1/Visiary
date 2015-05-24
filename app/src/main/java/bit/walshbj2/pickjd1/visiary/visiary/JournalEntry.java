@@ -6,7 +6,8 @@ public class JournalEntry {
 
     private  int journalID;
     private String date;
-    private String location;
+    private double locationLat;
+    private double locationLong;
     private String picFilePath;
     private String blurb;
 
@@ -26,12 +27,20 @@ public class JournalEntry {
         this.date = date;
     }
 
-    public String getLocation(){
-        return location;
+    public double getLocationLat(){
+        return locationLat;
     }
 
-    public void setLocation(String location){
-        this.location = location;
+    public void setLocationLat(double locationLat){
+        this.locationLat = locationLat;
+    }
+
+    public double getLocationLong(){
+        return locationLat;
+    }
+
+    public void setLocationLong(double locationLong){
+        this.locationLong = locationLong;
     }
 
     public String getPicFilePath(){

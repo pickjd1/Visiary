@@ -39,7 +39,6 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
 
         //Grab references to controls
         TextView dateTV = (TextView) customView.findViewById(R.id.textViewDate);
-        TextView locationTV = (TextView) customView.findViewById(R.id.textViewLocation);
         ImageView picIV = (ImageView) customView.findViewById(R.id.imageViewJournalPic);
         TextView blurbTV = (TextView) customView.findViewById(R.id.textViewBlurb);
 
@@ -73,7 +72,6 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
 
         //Use the instance data to initialise the view controls
         dateTV.setText(formattedDate);
-        locationTV.setText(currentEntry.getLocation());
         picIV.setImageBitmap(userPhoto);
         blurbTV.setText(currentEntry.getBlurb());
 

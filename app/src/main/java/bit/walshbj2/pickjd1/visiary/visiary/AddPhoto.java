@@ -31,6 +31,9 @@ public class AddPhoto extends ActionBarActivity {
     String timeStamp;
     String realFilePath;
 
+    double photoLatitude;
+    double photoLongitude;
+
     JournalDataSource dbAccess;
 
     boolean locationSet;
@@ -129,7 +132,7 @@ public class AddPhoto extends ActionBarActivity {
             //Set the text input from the edit text to a string
             String diaryEntry = etAboutPhoto.getText().toString();
 
-            String testingLocation = "hardCodedLocation";
+            //String testingLocation = "hardCodedLocation"; Used for first testing of the page
 
             //If the string is empty...
             if(!(diaryEntry.isEmpty()) && !(diaryEntry.equals("")))
@@ -143,12 +146,19 @@ public class AddPhoto extends ActionBarActivity {
                 //Otherwise...
                 else
                 {
-                    dbAccess.createJournalEntry(timeStamp, testingLocation,realFilePath,diaryEntry);
-                    //Create a new database object to add the entry to the database and save it.
-                   // Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
+                    if(locationSet == false)
+                    {
+                        Toast.makeText(AddPhoto.this,"Please add a location to your entry.", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        dbAccess.createJournalEntry(timeStamp, photoLatitude, photoLongitude, realFilePath, diaryEntry);
+                        //Create a new database object to add the entry to the database and save it.
+                        // Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(AddPhoto.this, Home.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(AddPhoto.this, Home.class);
+                        startActivity(intent);
+                    }
                 }
 
             }
@@ -221,8 +231,10 @@ public class AddPhoto extends ActionBarActivity {
         {
             if (resultCode == RESULT_OK)
             {
-                double photoLatitude = data.getDoubleExtra("latKey", 0.0);
-                double photoLongitude = data.getDoubleExtra("longKey", 0.0);
+                photoLatitude = data.getDoubleExtra("latKey", 0.0);
+                photoLongitude = data.getDoubleExtra("longKey", 0.0);
+
+                locationSet = true;
 
                 Toast.makeText(AddPhoto.this, ((Double.toString(photoLatitude)) + ", " + (Double.toString(photoLongitude))), Toast.LENGTH_LONG).show();
             }

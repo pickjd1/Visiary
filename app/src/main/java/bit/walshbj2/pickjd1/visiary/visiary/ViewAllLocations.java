@@ -8,7 +8,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.SQLException;
+import java.util.List;
+
 public class ViewAllLocations extends FragmentActivity {
+
+    List<JournalEntry> journalEntries;
+    JournalDataSource dataSource;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
@@ -16,6 +22,17 @@ public class ViewAllLocations extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_locations);
+
+        dataSource = new JournalDataSource(this);
+        try {
+            dataSource.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        journalEntries = dataSource.getJournalEntryList();
+
+
         setUpMapIfNeeded();
     }
 
@@ -61,5 +78,10 @@ public class ViewAllLocations extends FragmentActivity {
      */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+
+        for(JournalEntry je : journalEntries)
+        {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(je.getLocationLat(), je.getLocationLong())).title(je.getDate()));
+        }
     }
 }
