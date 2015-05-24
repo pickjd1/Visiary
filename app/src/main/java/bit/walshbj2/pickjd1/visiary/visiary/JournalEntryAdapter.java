@@ -2,6 +2,8 @@ package bit.walshbj2.pickjd1.visiary.visiary;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +43,13 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
         //Get the current inputItem
         JournalEntry currentEntry = getItem(position);
 
+        String filePath = currentEntry.getPicFilePath();
+        Bitmap userPhoto = BitmapFactory.decodeFile(filePath);
+
         //Use the instance data to initialise the view controls
         dateTV.setText(currentEntry.getDate());
         locationTV.setText(currentEntry.getLocation());
-
+        picIV.setImageBitmap(userPhoto);
         blurbTV.setText(currentEntry.getBlurb());
 
         //Return the view!!
