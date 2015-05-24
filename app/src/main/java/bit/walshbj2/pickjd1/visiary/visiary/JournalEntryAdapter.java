@@ -16,12 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
+public class JournalEntryAdapter extends ArrayAdapter<JournalEntry> {
 
     Context context;
     List<JournalEntry> entries;
 
-    public JournalEntryAdapter (Context context, int resource, List<JournalEntry> entries) {
+    public JournalEntryAdapter(Context context, int resource, List<JournalEntry> entries) {
         super(context, resource, entries);
 
         this.entries = entries;
@@ -80,6 +80,5 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
         //Return the view!!
         return customView;
     }
-
 
 }
