@@ -12,18 +12,20 @@ public class DatabaseManager extends SQLiteOpenHelper{
     public static final String TABLE_NAME = "tblJournalEntries";
     public static final String COLUMN_ID = "journalID";
     public static final String COLUMN_DATE = "date";
-    public static final String COLUMN_LOCATION = "location";
+    public static final String COLUMN_LOCATIONLAT = "locationLat";
+    public static final String COLUMN_LOCATIONLONG = "locationLong";
     public static final String COLUMN_PIC_FILEPATH = "picFilePath";
     public static final String COLUMN_BLURB = "blurb";
 
     private static final String DATABASE_NAME = "journalEntry.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     //Database creation sql statement
     private static final String createQuery = "CREATE TABLE "
             + TABLE_NAME + "("+COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_DATE + " DATE NOT NULL, "
-            + COLUMN_LOCATION + " TEXT NOT NULL, "
+            + COLUMN_LOCATIONLAT + " TEXT NOT NULL, "
+            + COLUMN_LOCATIONLONG + " TEXT NOT NULL, "
             + COLUMN_PIC_FILEPATH + " TEXT NOT NULL, "
             + COLUMN_BLURB + " TEXT NOT NULL);" ;
 

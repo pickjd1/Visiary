@@ -31,7 +31,12 @@ public class AddPhoto extends ActionBarActivity {
     String timeStamp;
     String realFilePath;
 
+    double photoLatitude;
+    double photoLongitude;
+
     JournalDataSource dbAccess;
+
+    boolean locationSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class AddPhoto extends ActionBarActivity {
         btnAddImage = (ImageButton) findViewById(R.id.btnAddPhoto);
         Button btnAddEntry = (Button) findViewById(R.id.btnSubmitEntry);
         TextView tvCurrentDate = (TextView) findViewById(R.id.tvCurrentDate);
+        Button btnAddLocation = (Button) findViewById(R.id.btnAddLocation);
 
         //Create a new formatted timestamp showing todays date and time
         SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -57,13 +63,21 @@ public class AddPhoto extends ActionBarActivity {
         //Create a new on click handler for the add entry button
         View.OnClickListener addEntryOnClick = new AddEntryOnClick();
 
+        //Create a new on click listener for the add location button
+        View.OnClickListener addLocationOnClick = new AddLocationOnClick();
+
         //Set the listener to the image button
         btnAddImage.setOnClickListener(addImageOnClick);
 
         //Set the listener to the add entry button
         btnAddEntry.setOnClickListener(addEntryOnClick);
 
+        //Set the liestener to the add location button
+        btnAddLocation.setOnClickListener(addLocationOnClick);
+
         dbAccess = new JournalDataSource(this);
+
+        locationSet = false;
     }
 
     @Override
@@ -118,7 +132,7 @@ public class AddPhoto extends ActionBarActivity {
             //Set the text input from the edit text to a string
             String diaryEntry = etAboutPhoto.getText().toString();
 
-            String testingLocation = "hardCodedLocation";
+            //String testingLocation = "hardCodedLocation"; Used for first testing of the page
 
             //If the string is empty...
             if(!(diaryEntry.isEmpty()) && !(diaryEntry.equals("")))
@@ -132,12 +146,19 @@ public class AddPhoto extends ActionBarActivity {
                 //Otherwise...
                 else
                 {
-                    dbAccess.createJournalEntry(timeStamp, testingLocation,realFilePath,diaryEntry);
-                    //Create a new database object to add the entry to the database and save it.
-                   // Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
+                    if(locationSet == false)
+                    {
+                        Toast.makeText(AddPhoto.this,"Please add a location to your entry.", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        dbAccess.createJournalEntry(timeStamp, photoLatitude, photoLongitude, realFilePath, diaryEntry);
+                        //Create a new database object to add the entry to the database and save it.
+                        // Toast.makeText(AddPhoto.this,"Entry added to your diary.", Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(AddPhoto.this, Home.class);
-                    startActivity(intent);
+                        Intent intent = new Intent(AddPhoto.this, Home.class);
+                        startActivity(intent);
+                    }
                 }
 
             }
@@ -170,9 +191,24 @@ public class AddPhoto extends ActionBarActivity {
         }
     }
 
+    //Inner class to handle the on click event of the image button**********************************
+    public class AddLocationOnClick implements View.OnClickListener
+    {
+
+        @Override
+        public void onClick(View v) {
+
+            Intent startLocationActivity = new Intent(AddPhoto.this, SetLocation.class);
+
+            startActivityForResult(startLocationActivity, 2);
+
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        //If the returned request code is returned from the camera application then...
         if (requestCode == 1)
         {
             if (resultCode == RESULT_OK)
@@ -186,7 +222,25 @@ public class AddPhoto extends ActionBarActivity {
             }
             else
             {
-                Toast.makeText(AddPhoto.this, "No photo saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddPhoto.this, "No Photo Saved", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        //If the returned request code is form the set location activity then...
+        if (requestCode == 2)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                photoLatitude = data.getDoubleExtra("latKey", 0.0);
+                photoLongitude = data.getDoubleExtra("longKey", 0.0);
+
+                locationSet = true;
+
+                Toast.makeText(AddPhoto.this, ((Double.toString(photoLatitude)) + ", " + (Double.toString(photoLongitude))), Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(AddPhoto.this, "No Location Set", Toast.LENGTH_LONG).show();
             }
         }
 

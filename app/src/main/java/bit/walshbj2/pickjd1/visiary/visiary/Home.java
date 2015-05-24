@@ -29,6 +29,7 @@ public class Home extends ActionBarActivity {
         dataSource = new JournalDataSource(this);
         try {
             dataSource.open();
+            //dataSource.UpdateDatbase(); ***************Used to update the database
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,6 +69,12 @@ public class Home extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_view_locations) {
+            Intent allLocations = new Intent(this, ViewAllLocations.class);
+            startActivity(allLocations);
         }
 
         return super.onOptionsItemSelected(item);
