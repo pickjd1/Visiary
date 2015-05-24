@@ -13,8 +13,8 @@
         android:id="@+id/textViewDate" />
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
         android:id="@+id/imageViewJournalPic"
         android:paddingTop="5dp"/>
@@ -26,5 +26,6 @@
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Blurb"
+        android:layout_marginBottom="20dp"
         android:id="@+id/textViewBlurb" />
 </LinearLayout>

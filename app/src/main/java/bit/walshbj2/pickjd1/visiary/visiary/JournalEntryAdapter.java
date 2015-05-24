@@ -72,7 +72,7 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
 
         //Use the instance data to initialise the view controls
         dateTV.setText(formattedDate);
-        picIV.setImageBitmap(userPhoto);
+        picIV.setImageBitmap(Bitmap.createScaledBitmap(userPhoto, 300, 300, false));
         blurbTV.setText(currentEntry.getBlurb());
 
         //Return the view!!

@@ -36,7 +36,7 @@ public class JournalEntry {
     }
 
     public double getLocationLong(){
-        return locationLat;
+        return locationLong;
     }
 
     public void setLocationLong(double locationLong){
