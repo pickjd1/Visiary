@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Date"
+        android:textColor="#66A3FF"
         android:id="@+id/textViewDate" />
 
     <TextView
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Location"
+        android:textColor="#FF9900"
         android:id="@+id/textViewLocation" />
 
     <ImageView
