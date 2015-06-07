@@ -1,5 +1,6 @@
 package bit.walshbj2.pickjd1.visiary.visiary;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -98,5 +101,21 @@ public class Home extends ActionBarActivity {
 
         //Bind the listView to the above adapter
         journalListView.setAdapter(adapter);
+
+        AdapterView.OnItemClickListener journalEntryClick = new JournalEntryClick();
+
+        journalListView.setOnClickListener((View.OnClickListener) journalEntryClick);
+    }
+
+    private class JournalEntryClick implements OnItemClickListener
+    {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            JournalEntry selectedEntry = journalEntries.get(position);
+            Intent showLocation = new Intent(Home.this, ViewAllLocations.class);
+            showLocation.putExtra("entryDate", selectedEntry.getDate().toString());
+            startActivity(showLocation);
+        }
     }
 }

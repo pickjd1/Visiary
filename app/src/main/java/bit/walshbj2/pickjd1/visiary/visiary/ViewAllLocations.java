@@ -1,5 +1,6 @@
 package bit.walshbj2.pickjd1.visiary.visiary;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -32,6 +33,14 @@ public class ViewAllLocations extends FragmentActivity {
             dataSource.open();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        //Need to check if bundle is not empty, get the date of the selected entry, and set focus to that specific entry.
+        Intent startIntent = getIntent();
+        String focusDateString = startIntent.getStringExtra("entryDate");
+
+        if(!focusDateString.isEmpty()) {
+            Date focusDate = new Date(focusDateString);
         }
 
         journalEntries = dataSource.getJournalEntryList();
