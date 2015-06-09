@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public class Home extends ActionBarActivity {
+public class Home extends AppCompatActivity {
 
     List<JournalEntry> journalEntries;
    JournalDataSource dataSource;
@@ -53,6 +54,16 @@ public class Home extends ActionBarActivity {
 
         //Set the onClickListener to the add a Journal Entry image button.
         addEntry.setOnClickListener(new addEntryButton());
+
+        //Need to check if bundle is not empty, get the date of the selected entry, and set focus to that specific entry.
+        Intent startIntent = getIntent();
+        String focusEntry = "";
+        focusEntry = startIntent.getStringExtra("markerDescription");
+
+        if (focusEntry!= null)
+        {
+
+        }
     }
 
     @Override
@@ -102,9 +113,9 @@ public class Home extends ActionBarActivity {
         //Bind the listView to the above adapter
         journalListView.setAdapter(adapter);
 
-        AdapterView.OnItemClickListener journalEntryClick = new JournalEntryClick();
+        OnItemClickListener journalEntryClick = new JournalEntryClick();
 
-        journalListView.setOnClickListener((View.OnClickListener) journalEntryClick);
+        journalListView.setOnItemClickListener(journalEntryClick);
     }
 
     private class JournalEntryClick implements OnItemClickListener
