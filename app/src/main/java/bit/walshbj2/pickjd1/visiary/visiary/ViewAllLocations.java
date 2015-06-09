@@ -59,9 +59,10 @@ public class ViewAllLocations extends FragmentActivity {
 
             for(JournalEntry j : journalEntries)
             {
-                if(j.getDate().equals(focusDate))
+                if(j.getDate().equals(formatter.format(focusDate)))
                 {
                     focusEntry = j;
+                    break;
                 }
             }
         }
@@ -116,6 +117,7 @@ public class ViewAllLocations extends FragmentActivity {
 
         LatLng latLng = new LatLng(0,0);
 
+        LatLng latestPosition = new LatLng(journalEntries.get(0).getLocationLat(), journalEntries.get(0).getLocationLong());
 
         for(JournalEntry je : journalEntries)
         {
@@ -148,11 +150,11 @@ public class ViewAllLocations extends FragmentActivity {
 
         if(focusEntry != null)
         {
-            latLng = new LatLng(focusEntry.getLocationLat(), focusEntry.getLocationLong());
+            latestPosition = new LatLng(focusEntry.getLocationLat(), focusEntry.getLocationLong());
         }
 
         float zoomLevel = (float) 16.0; //This goes up to 21
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latestPosition, zoomLevel));
 
         //Set up the info click listener to return to the journal entry when the info window is clicked
         GoogleMap.OnInfoWindowClickListener infoClick = new InfoClick();
