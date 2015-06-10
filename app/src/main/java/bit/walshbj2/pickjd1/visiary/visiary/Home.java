@@ -17,13 +17,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
 public class Home extends AppCompatActivity {
 
     List<JournalEntry> journalEntries;
-   JournalDataSource dataSource;
+    JournalDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,36 @@ public class Home extends AppCompatActivity {
 
         journalEntries = dataSource.getJournalEntryList();
 
-
         if(journalEntries.isEmpty())
         {
         ImageView empty = (ImageView) findViewById(R.id.imageViewEmptyList);
         empty.setVisibility(View.VISIBLE);
         }
         else {
-            setListView();
+            //Need to check if bundle is not empty, get the date of the selected entry, and set focus to that specific entry.
+            Intent startIntent = getIntent();
+            String focusEntry = "";
+            focusEntry = startIntent.getStringExtra("markerDescription");
+
+            if (focusEntry!= null)
+            {
+                int count = (-1);
+
+                for(JournalEntry j : journalEntries)
+                {
+                    count++;
+                    if(j.getBlurb().equals(focusEntry))
+                    {
+                        break;
+                    }
+
+                }
+                setListView(count);
+            }
+            else
+            {
+                setListView();
+            }
         }
         //Retrieve resources
         ImageButton addEntry = (ImageButton) findViewById(R.id.imageButtonAddEntry);
@@ -55,15 +80,7 @@ public class Home extends AppCompatActivity {
         //Set the onClickListener to the add a Journal Entry image button.
         addEntry.setOnClickListener(new addEntryButton());
 
-        //Need to check if bundle is not empty, get the date of the selected entry, and set focus to that specific entry.
-        Intent startIntent = getIntent();
-        String focusEntry = "";
-        focusEntry = startIntent.getStringExtra("markerDescription");
 
-        if (focusEntry!= null)
-        {
-
-        }
     }
 
     @Override
@@ -116,6 +133,25 @@ public class Home extends AppCompatActivity {
         OnItemClickListener journalEntryClick = new JournalEntryClick();
 
         journalListView.setOnItemClickListener(journalEntryClick);
+    }
+
+    private void setListView(int position) {
+
+        ListView journalListView = (ListView) findViewById(R.id.listViewJornalEntries);
+
+        JournalEntryAdapter adapter = new JournalEntryAdapter(this, R.layout.journal_entries_layout, journalEntries );
+
+        //Bind the listView to the above adapter
+        journalListView.setAdapter(adapter);
+
+        OnItemClickListener journalEntryClick = new JournalEntryClick();
+
+        journalListView.setOnItemClickListener(journalEntryClick);
+
+        journalListView.smoothScrollToPosition(position);
+        journalListView.setSelection(position);
+
+
     }
 
     private class JournalEntryClick implements OnItemClickListener
