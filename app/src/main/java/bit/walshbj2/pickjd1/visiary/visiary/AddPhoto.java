@@ -1,5 +1,6 @@
 package bit.walshbj2.pickjd1.visiary.visiary;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,6 +44,7 @@ public class AddPhoto extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
+
 
         //Retrieve layout resources.
         btnAddImage = (ImageButton) findViewById(R.id.btnAddPhoto);
@@ -158,6 +161,8 @@ public class AddPhoto extends ActionBarActivity {
 
                         Intent intent = new Intent(AddPhoto.this, Home.class);
                         startActivity(intent);
+
+                        AddPhoto.this.finish();
                     }
                 }
 
