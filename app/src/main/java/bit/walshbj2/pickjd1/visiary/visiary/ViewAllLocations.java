@@ -167,6 +167,7 @@ public class ViewAllLocations extends FragmentActivity {
             Intent goToJournal = new Intent(ViewAllLocations.this, Home.class);
             goToJournal.putExtra("markerDescription", marker.getTitle());
             startActivity(goToJournal);
+            finish();
         }
     }
 }
