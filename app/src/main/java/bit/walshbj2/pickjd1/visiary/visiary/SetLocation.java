@@ -13,6 +13,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.location.Location;
 import android.content.IntentSender;
@@ -144,6 +145,8 @@ public class SetLocation extends FragmentActivity  implements
      */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        GoogleMap.OnMarkerDragListener markerDragged = new MarkerDragged();
+        mMap.setOnMarkerDragListener(markerDragged);
     }
 
     private void handleNewLocation(Location location) {
@@ -157,6 +160,7 @@ public class SetLocation extends FragmentActivity  implements
         //mMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Current Location"));
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
+                .draggable(true)
                 .title("Your Current Location");
         mMap.addMarker(options);
 
@@ -229,6 +233,29 @@ public class SetLocation extends FragmentActivity  implements
 
             setResult(RESULT_OK,startLocationActivity);
             finish();
+        }
+    }
+
+    public class MarkerDragged implements GoogleMap.OnMarkerDragListener
+    {
+
+        @Override
+        public void onMarkerDragStart(Marker marker) {
+
+        }
+
+        @Override
+        public void onMarkerDrag(Marker marker) {
+
+        }
+
+        @Override
+        public void onMarkerDragEnd(Marker marker) {
+
+            LatLng newPosition = marker.getPosition();
+            currentLatitude = newPosition.latitude;
+            currentLongitude = newPosition.longitude;
+
         }
     }
 }
