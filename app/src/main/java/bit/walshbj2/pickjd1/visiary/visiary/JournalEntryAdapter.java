@@ -20,17 +20,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class JournalEntryAdapter extends ArrayAdapter<JournalEntry> implements Filterable {
+public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
 
     Context context;
     List<JournalEntry> entries;
-    List<JournalEntry> baseEntries;
 
     public JournalEntryAdapter(Context context, int resource, List<JournalEntry> entries) {
         super(context, resource, entries);
 
         this.entries = entries;
-        baseEntries = entries;
         this.context = context;
     }
 
@@ -84,73 +82,4 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry> implements F
         //Return the view!!
         return customView;
     }
-
-    @Override
-    public Filter getFilter() {
-
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-                // Implement filter logic
-                if(constraint == null || constraint.length() ==0)
-                {
-                    // No filter implemented, return list
-                    results.values = entries;
-                    results.values = entries.size();
-                }
-                else {
-                    // Perform filtering operation
-                    List<JournalEntry> nEntriesList = new ArrayList<>();
-
-                    for (JournalEntry je : entries) {
-                        if(je.getBlurb().toUpperCase().contains(constraint.toString().toUpperCase()))nEntriesList.add(je);
-                    }
-                    results.values = nEntriesList;
-                    results.count = nEntriesList.size();
-                }
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                // Inform the adapter about the new list filtered
-                if(filterResults.count==0) {
-                    //notifyDataSetInvalidated();
-                    entries.clear();
-                    entries = baseEntries;
-                    notifyDataSetChanged();
-                }
-                else{
-                   // entries = (List<JournalEntry>) filterResults.values;
-
-                    entries.clear();
-                    entries.addAll((List < JournalEntry >) filterResults.values);
-                    notifyDataSetChanged();
-                }
-
-            }
-        };
-    }
-
-//    // Filter Class
-//    public void filter(String charText) {
-//        charText = charText.toLowerCase(Locale.getDefault());
-//        entries.clear();
-//        if (charText.length() == 0) {
-//            entries.addAll(entries);
-//        } else {
-//            List<JournalEntry> nEntriesList = new ArrayList<>();
-//            for (JournalEntry wp : entries) {
-//                if (wp.getBlurb().toLowerCase(Locale.getDefault())
-//                        .contains(charText)) {
-//                   nEntriesList.add(wp);
-//                }
-//            }
-//        }
-//        notifyDataSetChanged();
-//    }
-
-
-
 }

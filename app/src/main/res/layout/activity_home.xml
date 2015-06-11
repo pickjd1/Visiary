@@ -20,16 +20,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <!--<at.markushi.ui.CircleButton-->
-        <!--android:layout_width="64dp"-->
-        <!--android:layout_height="64dp"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--app:cb_color="@color/primary"-->
-        <!--app:cb_pressedRingWidth="8dp"-->
-        <!--android:src="@drawable/ic_action_add"-->
-        <!--android:id="@+id/imageButtonAddEntry"  />-->
-
     <at.markushi.ui.CircleButton
         android:layout_width="64dip"
         android:layout_height="64dip"
