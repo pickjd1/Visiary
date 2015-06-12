@@ -79,7 +79,7 @@ public class Home extends AppCompatActivity {
             }
             else
             {
-                setListView();
+                setListView(journalEntries);
             }
         }
 
