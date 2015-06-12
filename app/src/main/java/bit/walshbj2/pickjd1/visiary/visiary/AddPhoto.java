@@ -181,6 +181,7 @@ public class AddPhoto extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            //When the add image button is clicked create a new time stamped file
             mPhotoFile = createTimeStampedFile();
 
             mPhotoFileUri = Uri.fromFile(mPhotoFile);
@@ -199,9 +200,9 @@ public class AddPhoto extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-
+            //When the Location button is clicked start the intent to the set location activity
             Intent startLocationActivity = new Intent(AddPhoto.this, SetLocation.class);
-
+            //Start the activity for a result
             startActivityForResult(startLocationActivity, 2);
 
         }
@@ -213,12 +214,14 @@ public class AddPhoto extends AppCompatActivity {
         //If the returned request code is returned from the camera application then...
         if (requestCode == 1)
         {
+            //Check the result code returned is ok to proceed
             if (resultCode == RESULT_OK)
             {
+                //Get the photo file path
                 realFilePath = mPhotoFile.getPath();
-
+                //Create a bitmap from the photos filepath
                 Bitmap userPhoto = BitmapFactory.decodeFile(realFilePath);
-
+                // Set the image button to display the photo
                 btnAddImage.setImageBitmap(Bitmap.createScaledBitmap(userPhoto,btnAddImage.getWidth(),btnAddImage.getHeight(),false));
 
             }
@@ -231,11 +234,13 @@ public class AddPhoto extends AppCompatActivity {
         //If the returned request code is form the set location activity then...
         if (requestCode == 2)
         {
+            //Check the result code returned is ok to proceed
             if (resultCode == RESULT_OK)
             {
+                //Set the location lat and long for the photo
                 photoLatitude = data.getDoubleExtra("latKey", 0.0);
                 photoLongitude = data.getDoubleExtra("longKey", 0.0);
-
+                //Set the locationSet boolean to true to allow for submission
                 locationSet = true;
 
             }
@@ -247,6 +252,7 @@ public class AddPhoto extends AppCompatActivity {
 
     }
 
+    //Method to exit the on screen keyboard when a user touches outside the board
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.

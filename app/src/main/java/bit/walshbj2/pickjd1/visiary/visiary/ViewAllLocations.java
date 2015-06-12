@@ -161,9 +161,12 @@ public class ViewAllLocations extends FragmentActivity {
         mMap.setOnInfoWindowClickListener(infoClick);
     }
 
+    //Method to handle the user clicking on the title of the markers
     public class InfoClick implements GoogleMap.OnInfoWindowClickListener {
         @Override
         public void onInfoWindowClick(Marker marker) {
+            //When a marker title is clicked start an intent to return to the home screen and set
+            //the focus to the clicked marker journal entry.
             Intent goToJournal = new Intent(ViewAllLocations.this, Home.class);
             goToJournal.putExtra("markerDescription", marker.getTitle());
             startActivity(goToJournal);
