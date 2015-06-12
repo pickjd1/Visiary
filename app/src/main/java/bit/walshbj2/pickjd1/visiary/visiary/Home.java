@@ -78,13 +78,12 @@ public class Home extends AppCompatActivity {
                     {
                         break;
                     }
-
                 }
                 setListView(count);
             }
             else
             {
-                setListView(journalEntries);
+                setListView(journalEntries); //Set Listview
             }
         }
 
@@ -100,10 +99,13 @@ public class Home extends AppCompatActivity {
         //Set TextWater
         inputSearch.addTextChangedListener(new searchController());
 
+        //Bind searchBtton with id
         Button searchButton = (Button) findViewById(R.id.search_entries_button);
 
+        //Set up clickListener
         View.OnClickListener searchClickListener = new JournalSearchClick();
 
+        //Bind button, and listener together.
         searchButton.setOnClickListener(searchClickListener);
     }
 
@@ -165,12 +167,10 @@ public class Home extends AppCompatActivity {
         journalListView.setAdapter(adapter);
 
         OnItemClickListener journalEntryClick = new JournalEntryClick();
-
         journalListView.setOnItemClickListener(journalEntryClick);
     }
 
     private void setListView(int position) {
-
         ListView journalListView = (ListView) findViewById(R.id.listViewJornalEntries);
 
         JournalEntryAdapter adapter = new JournalEntryAdapter(this, R.layout.journal_entries_layout, journalEntries );
@@ -184,8 +184,6 @@ public class Home extends AppCompatActivity {
 
         journalListView.smoothScrollToPosition(position);
         journalListView.setSelection(position);
-
-
     }
 
     private class JournalEntryClick implements OnItemClickListener
@@ -220,6 +218,9 @@ public class Home extends AppCompatActivity {
         }
     }
 
+    //*****************************************************************
+    //  Dismisses keyboard on touch event
+    //*****************************************************************
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.
@@ -228,6 +229,9 @@ public class Home extends AppCompatActivity {
         return true;
     }
 
+    //*****************************************************************
+    //  Journal serach click
+    //*****************************************************************
     private class JournalSearchClick implements View.OnClickListener
     {
         @Override
@@ -249,8 +253,7 @@ public class Home extends AppCompatActivity {
             {
                 setListView(journalEntries);
             }
-
-            hideKeyboard(v);
+            hideKeyboard(v); //call method to hide keyboard.
             Toast.makeText(Home.this, nEntriesList.size() + " Journal Entries Found",Toast.LENGTH_LONG).show();
         }
 

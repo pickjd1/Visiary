@@ -50,8 +50,7 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
         //Get the current inputItem
         JournalEntry currentEntry = getItem(position);
 
-        //Format Date
-        //Create a new formatted timestamp showing todays date and time
+        //Format Date: Create a new formatted timestamp showing todays date and time
 
         String date = currentEntry.getDate();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
