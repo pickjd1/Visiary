@@ -243,7 +243,6 @@ public class AddPhoto extends AppCompatActivity {
 
                 locationSet = true;
 
-                Toast.makeText(AddPhoto.this, ((Double.toString(photoLatitude)) + ", " + (Double.toString(photoLongitude))), Toast.LENGTH_LONG).show();
             }
             else
             {

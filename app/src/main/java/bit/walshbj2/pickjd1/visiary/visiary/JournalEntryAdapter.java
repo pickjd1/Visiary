@@ -9,17 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
 
@@ -64,7 +60,7 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
             e.printStackTrace();
         }
 
-        // Set up new format ("WeekDay, Day, Month ' Year Hour:Mintues M")
+        // Set up new format ("WeekDay, Day, Month ' Year Hour:Minutes M")
         SimpleDateFormat newFormat = new SimpleDateFormat(
                 "EEE, MMM d, yyyy h:mm aaa");
         // reformat date and put back into a string

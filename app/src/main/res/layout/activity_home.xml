@@ -43,9 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewEmptyList"
-        android:layout_below="@+id/textViewHome"
         android:visibility="invisible"
         android:src="@drawable/welcome_image"
+        android:layout_alignTop="@+id/listViewJornalEntries"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -56,8 +56,8 @@
         android:focusableInTouchMode="true"
         android:focusable="true"
         android:layout_below="@+id/imageButtonAddEntry"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button" />
+        android:layout_toLeftOf="@+id/search_entries_button"
+        android:layout_toStartOf="@+id/search_entries_button" />
 
     <Button
         android:layout_width="wrap_content"
