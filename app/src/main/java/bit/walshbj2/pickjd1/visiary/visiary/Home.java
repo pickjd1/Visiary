@@ -1,6 +1,7 @@
 package bit.walshbj2.pickjd1.visiary.visiary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +11,9 @@ import android.text.TextWatcher;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -33,6 +37,7 @@ public class Home extends AppCompatActivity {
 
     List<JournalEntry> journalEntries;
     JournalDataSource dataSource;
+    String searchKeywords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +84,7 @@ public class Home extends AppCompatActivity {
             }
             else
             {
-                setListView();
+                setListView(journalEntries);
             }
         }
 
@@ -94,6 +99,12 @@ public class Home extends AppCompatActivity {
 
         //Set TextWater
         inputSearch.addTextChangedListener(new searchController());
+
+        Button searchButton = (Button) findViewById(R.id.search_entries_button);
+
+        View.OnClickListener searchClickListener = new JournalSearchClick();
+
+        searchButton.setOnClickListener(searchClickListener);
     }
 
     @Override
@@ -196,28 +207,61 @@ public class Home extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
-            //Set new JournalEntry List that will be sent to setListView()
-            List<JournalEntry> nEntriesList = new ArrayList<>();
-            // When user changes the Text, get string change to uppercase
-            String charString = cs.toString().toUpperCase();
-
-            //search JournalEntry Blurbs for characters that contain same characaters as charString
-            for (JournalEntry je : journalEntries) {
-                if(je.getBlurb().toUpperCase().contains(charString))nEntriesList.add(je);
-            }
-
-            // If ListView is not null, or empty update setListView to nEntriesList
-            if(nEntriesList != null && !nEntriesList.isEmpty()) {
-                setListView(nEntriesList);
-            }
         }
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // When user changes the Text, get string change to uppercase
+            searchKeywords = charSequence.toString().toUpperCase();
         }
 
         @Override
         public void afterTextChanged(Editable editable) {
         }
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
+    }
+
+    private class JournalSearchClick implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View v) {
+
+            //Set new JournalEntry List that will be sent to setListView()
+            List<JournalEntry> nEntriesList = new ArrayList<>();
+
+            //search JournalEntry Blurbs for characters that contain same characters as charString
+            for (JournalEntry je : journalEntries) {
+                if(je.getBlurb().toUpperCase().contains(searchKeywords))nEntriesList.add(je);
+            }
+
+            // If ListView is not null, or empty update setListView to nEntriesList
+            if(nEntriesList != null && !nEntriesList.isEmpty()) {
+                setListView(nEntriesList);
+            }
+            else
+            {
+                setListView(journalEntries);
+            }
+
+            hideKeyboard(v);
+            Toast.makeText(Home.this, nEntriesList.size() + " Journal Entries Found",Toast.LENGTH_LONG).show();
+        }
+
+        //Method to hide the keyboard once the search button has been clicked
+        public void hideKeyboard(View v) {
+            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.
+                    INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),
+                    InputMethodManager.RESULT_UNCHANGED_SHOWN);
+        }
+
+    }
+
 }

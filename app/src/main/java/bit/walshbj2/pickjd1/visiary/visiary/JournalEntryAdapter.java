@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +74,19 @@ public class JournalEntryAdapter extends ArrayAdapter<JournalEntry>{
         //Get the filePath of the image, make it into a bitmap.
         String filePath = currentEntry.getPicFilePath();
         Bitmap userPhoto = BitmapFactory.decodeFile(filePath);
+        //Drawable userPhoto = Drawable.createFromPath(filePath);
+
 
         //Use the instance data to initialise the view controls
         dateTV.setText(formattedDate);
         picIV.setImageBitmap(Bitmap.createScaledBitmap(userPhoto, 250, 250, false));
-        blurbTV.setText(currentEntry.getBlurb());
+        //picIV.setImageDrawable(userPhoto);
 
+        //Attempting to fix memory leak...
+        picIV.setBackgroundDrawable(null);
+        userPhoto.recycle();
+
+        blurbTV.setText(currentEntry.getBlurb());
         //Return the view!!
         return customView;
     }
